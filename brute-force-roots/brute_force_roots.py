@@ -1,1 +1,0 @@
-'''Find roots using brute force'''
