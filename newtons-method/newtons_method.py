@@ -15,7 +15,8 @@ def main():
 # Example functions and its derivative
 def f(x):
     return x**2 - 4
-    
+
+
 def dfdx(x):
     return 2*x
     
@@ -54,6 +55,7 @@ def newton(f, dfdx, x, eps):
         iteration_counter = -1
 
     return x, iteration_counter
+
 
 if __name__ == '__main__':
     main()

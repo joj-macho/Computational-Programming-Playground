@@ -1,6 +1,4 @@
-from numpy import linspace
-from numpy import sin, pi
-
+import numpy as np
 
 def main():
     '''Main function to find roots using brute force.'''
@@ -19,14 +17,15 @@ def main():
         print(f'No roots in [{interval_start}, {interval_end}]')
 
 
-# Define the functions f(x), g(x), h(x) ... for which we want to find roots
+# Define the functions f(x), g(x), h(x) ...
 def f(x):
     '''A function example'''
     return x**2 - 4  # f(x) = x^2 - 4
 
+
 def g(x):
     '''Another function example'''
-    return x + 2 * sin(2 * pi * x / 3) - 1
+    return x + 2 * np.sin(2 * np.pi * x / 3) - 1
 
 
 def brute_force_root_finding(f, a, b, n):
@@ -43,7 +42,7 @@ def brute_force_root_finding(f, a, b, n):
     list: A list of roots found within the interval.
     '''
 
-    x_values = linspace(a, b, n)  # Generate equally spaced points in the interval
+    x_values = np.linspace(a, b, n)  # Generate equally spaced points in the interval
     y_values = f(x_values)  # Evaluate the function at each point
     roots = []  # Initialize a list to store the roots
 
