@@ -12,11 +12,11 @@ def main():
         print('Solution not found!')
 
 
-# Example functions and its derivative
+# Example function ...
 def f(x):
     return x**2 - 4
-
-
+    
+# and its derivative
 def dfdx(x):
     return 2*x
     
