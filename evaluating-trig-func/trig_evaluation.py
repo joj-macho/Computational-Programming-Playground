@@ -55,17 +55,10 @@ def main():
         print('tan(x) using continued fractions:', result_tan_cf)
 
         print('\n--------------------------------\n')
-    
+
+
 def sine(x):
-    """
-    Evaluates sin(x) from its power-series expansion.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The sine value sin(x).
-    """
+    '''Evaluates sin(x) from its power-series expansion.'''
     eps = 1e-14
    
     i = 1
@@ -78,16 +71,9 @@ def sine(x):
 
     return f
 
+
 def cosine(x):
-    """
-    Evaluates cos(x) from its power-series expansion.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The cosine value cos(x).
-    """
+    '''Evaluates cos(x) from its power-series expansion.'''
     eps = 1e-14
 
     i = 0
@@ -102,16 +88,8 @@ def cosine(x):
     return f
 
 def arcsine(x):
-    """
-    Evaluates arcsin(x) from its power-series expansion.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The arcsine value arcsin(x).
-    """
-    eps = 1e-14  # Relative precision
+    '''Evaluates arcsin(x) from its power-series expansion.'''
+    eps = 1e-14
    
     i = 1
     f = t = x
@@ -124,29 +102,15 @@ def arcsine(x):
 
     return f
 
+
 def arccosine(x):
-    """
-    Evaluates arccos(x) from its power-series expansion.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The arccosine value arccos(x).
-    """
+    '''Evaluates arccos(x) from its power-series expansion.'''
     return math.pi/2 - arcsine(x)
 
+
 def tangent_power_series(x):
-    """
-    Evaluates tan(x) from its power-series expansion.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The tangent value tan(x).
-    """
-    eps = 1e-14  # Relative precision
+    '''Evaluates tan(x) from its power-series expansion.'''
+    eps = 1e-14
 
     i = 1
     f = t = x
@@ -161,17 +125,10 @@ def tangent_power_series(x):
 
     return f
 
+
 def tangent_continued_fraction(x):
-    """
-    Evaluates tan(x) from its continued fraction representation.
-
-    Parameters:
-    x (float): The input value.
-
-    Returns:
-    float: The tangent value tan(x).
-    """
-    eps = 1e-14  # Relative precision
+    '''Evaluates tan(x) from its continued fraction representation.'''
+    eps = 1e-14
 
     a = 1.0
     b = -x * x
@@ -194,6 +151,7 @@ def tangent_continued_fraction(x):
         r = p / q
 
     return r
+
 
 if __name__ == '__main__':
     main()
