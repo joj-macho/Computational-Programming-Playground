@@ -17,8 +17,8 @@ This program implements the Bisection method to find the roots of a given functi
 
 ## How it Works
 
-- The `main()` initiates the root finding process using the bisection method.
-- The `bisection()` function implements the bisection method to find the root of a given function.
+- The `main()` function initiates the root finding process using the bisection method.
+- The `bisect()` function implements the bisection method to find the root of a given function.
 - The method iteratively narrows down the interval containing the root by evaluating the function at the midpoint and updating the interval based on the sign of the function value.
 
 
@@ -26,8 +26,11 @@ This program implements the Bisection method to find the roots of a given functi
 
 When you run the program, `bisection_method.py`, the output will look like this:
 
-for $f(x) = x^2 - 4$, Interval $[0, 1000]$, and desired accuracy $\epsilon = 1 \times 10^{-6}$
+for $f(x) = x^2 - 2$, Interval $[-10, 10]$ with step $0.1$, and desired accuracy $\epsilon = 1 \times 10^{-6}$
 ```
-Number of function calls: 63
-A solution is: 2.000000
+
+Finding Roots using Bisection Method
+
+Root: -1.41421 found in interval (-1.50, -1.40) after 16 iterations.
+Root: 1.41421 found in interval (1.40, 1.50) after 16 iterations.
 ```
