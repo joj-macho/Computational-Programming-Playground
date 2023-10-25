@@ -29,12 +29,22 @@ def main():
 
 def newton_raphson(f, a, b, x):
     '''
-    Determines a real root x of function f isolated in interval [a,b] by the Newton-Raphson method using the numerical derivative. x contains an initial approximation on input.
+    Determines a real root x of function f isolated in interval [a, b] using the Newton-Raphson method with numerical derivative.
+    
+    Parameters:
+        f (function): The function for which the root is to be found.
+        a (float): The lower limit of the interval.
+        b (float): The upper limit of the interval.
+        x (float): An initial approximation of the root.
 
-    Error codes:
-        0 - Normal execution
-        1 - Interval does not contain a root
-        2 - Maximum number of iterations exceeded
+    Returns:
+        Tuple: A tuple (root, error_code, iterations) containing:
+        - root (float): The estimated root of the function.
+        - error_code (int): An error code indicating the outcome:
+            0 - Normal execution
+            1 - Interval does not contain a root
+            2 - Maximum number of iterations exceeded
+        - iterations (int): The number of iterations performed to find the root.
     '''
     eps = 1e-10  # Precision/tolerance of the root
     max_iterations = 100  # Maximum number of iterations

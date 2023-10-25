@@ -31,11 +31,20 @@ def main():
 def bisect(f, a, b):
     '''
     Determine a real root x of function f isolated in the interval [a, b] using the bisection method.
+    
+    Parameters:
+        f (function): The function for which the root is to be found.
+        a (float): The lower limit of the interval.
+        b (float): The upper limit of the interval.
 
-    Error codes:
-        0 - Normal execution
-        1 - [a, b] does not isolate one root or contains several roots
-        2 - Maximum number of iterations exceeded
+    Returns:
+        Tuple: A tuple (root, error_code, iterations) containing:
+        - root (float): The estimated root of the function.
+        - error_code (int): An error code indicating the outcome:
+            0 - Normal execution
+            1 - [a, b] does not isolate one root or contains several roots
+            2 - Maximum number of iterations exceeded
+        - iterations (int): The number of iterations performed to find the root.
     '''
     eps = 1e-6  # Precision/tolerance of the root
     max_iterations = 100  # Maximum number of iterations
