@@ -16,7 +16,7 @@ This program implements the Newton-Raphson method to find the roots of a given f
 
 - The program starts by defining the `main` function.
 
-- The `newton` function implements the Newton-Raphson method to find the root of a given function.
+- The `newton_raphson` function implements the Newton-Raphson method to find the root of a given function.
 
 - The method uses the derivative of the function to iteratively refine the guess for the root until the function value is within the desired accuracy or the maximum iterations are reached.
 
@@ -24,8 +24,12 @@ This program implements the Newton-Raphson method to find the roots of a given f
 
 When you run the program, `newton_method.py`, the output will look like this:
 
-for $f(x) = x^2 - 4$, $f'(x) = 2x$, Initial guess $x_0 = 1000$, and desired accuracy $\epsilon = 1 \times 10^{-6}$
+for $f(x) = x^2 - 2$, Interval $[-10, 10]$ with step $0.1$, and desired accuracy $\epsilon = 1 \times 10^{-6}$
+
 ```
-Number of function calls: 27
-A solution is: 2.000000
+
+Finding Roots using Newton-Raphson Method with Numerical Derivative
+
+Root: -1.41421 found in interval (-1.50, -1.40) after 4 iterations.
+Root: 1.41421 found in interval (1.40, 1.50) after 4 iterations.
 ```

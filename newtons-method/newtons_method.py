@@ -1,62 +1,67 @@
-import sys
+import math
+import numpy as np
 
 def main():
-    '''Main function to find roots using Newton-Rhapson Method'''
+    '''Main function to find and print roots using the Newton-Raphson Method (Numerical Derivative).'''
 
-    solution, no_iterations = newton(f, dfdx, x=1000, eps=1.0e-6)
-    
-    if no_iterations > 0:  # Solution found
-        print('Number of function calls: {:d}'.format(1+2*no_iterations))
-        print('A solution is: {:f}'.format(solution))
-    else:
-        print('Solution not found!')
+    print('\nFinding Roots using Newton-Raphson Method with Numerical Derivative\n')
+
+    f = lambda x: x**2 - 2  # function f(x)
+    x_min = -10  # Lower limit of the root search domain
+    x_max = 10  # Upper limit of the root search domain
+    h = 0.1  # Width of root separation intervals
+
+    a = x_min
+    while a < x_max:
+        # Define the search interval [a, b] and find root
+        b = a + h  # Search interval [a, b]
+        x = (a + b) / 2  # Initial approximation
+        root, iteration_error, iterations = newton_raphson(f, a, b, x)
+
+        # Check if the root was found successfully (iteration_error == 0) and it's not at the right interval boundary
+        if iteration_error == 0 and root != b:
+            print(f'Root: {root:.5f} found in interval ({a:.2f}, {b:.2f}) '
+                  f'after {iterations} iterations.')
+
+        # Shift left boundary
+        a = b
 
 
-# Example function ...
-def f(x):
-    return x**2 - 4
-    
-# and its derivative
-def dfdx(x):
-    return 2*x
-    
-
-def newton(f, dfdx, x, eps):
-    '''    
-    This function uses the Newton-Raphson method to find the root of a given function.
-
-    Parameters:
-    f (callable): The function for which we want to find the root.
-    dfdx (callable): The derivative of the function.
-    x (float): The initial guess for the root.
-    eps (float): The desired accuracy for the root.
-
-    Returns:
-    tuple: A tuple containing the root and the number of iterations taken to find the root.
+def newton_raphson(f, a, b, x):
     '''
-    f_value = f(x)  # Evaluate the function at the initial guess
-    iteration_counter = 0  # Initialize iteration counter
+    Determines a real root x of function f isolated in interval [a,b] by the Newton-Raphson method using the numerical derivative. x contains an initial approximation on input.
 
-    # Iterate until the function value is within the desired accuracy or the maximum number of iterations is reached
-    while abs(f_value) > eps and iteration_counter < 100:
-        try:
-            # Update x using the Newton-Raphson formula to approach the root
-            x = x - f_value/dfdx(x)
-        except ZeroDivisionError:
-            print(f'Error! Zero derivative for x = {x}')
-            sys.exit(1)
+    Error codes:
+        0 - Normal execution
+        1 - Interval does not contain a root
+        2 - Maximum number of iterations exceeded
+    '''
+    eps = 1e-10  # Precision/tolerance of the root
+    max_iterations = 100  # Maximum number of iterations
 
-        # Evaluate the function at the updated x and increment the iteration counter
-        f_value = f(x)
-        iteration_counter = iteration_counter + 1
+    for iteration in range(1, max_iterations + 1):
+        fx = f(x)  # Evaluate the function at the current approximation x
+        dx = eps * math.fabs(x) if x else eps  # Determine the derivation step for numerical differentiation
+        df = (f(x + dx) - fx) / dx  # Calculate the numerical derivative of f
 
-    # Check if a solution is found or too many iterations were performed
-    if abs(f_value) > eps:
-        iteration_counter = -1
+        if math.fabs(df) < eps:
+            dx = -fx  # Avoid division by very small df
+        else:
+            dx = -fx / df  # Determine the root correction
 
-    return x, iteration_counter
+        x += dx  # Update the current approximation with the root correction
 
+        # If the root is outside the interval [a, b], return error code 1
+        if not a <= x <= b:
+            return x, 1, 0
+
+
+        # If the root is converged, return the root and success code (0)
+        if math.fabs(dx) <= eps * math.fabs(x):
+            return x, 0, iteration
+
+    print('Maximum number of iterations exceeded!')
+    return x, 2, max_iterations
 
 if __name__ == '__main__':
     main()
-
