@@ -1,64 +1,80 @@
-import sys
+import math
+import numpy as np
 
 def main():
-    '''Main function to find roots using Secant Method'''
-
-    # Initial guesses for the root
-    x0 = 1000
-    x1 = x0 - 1
+    '''Main function to find and print roots using the Secant Method.'''
     
-    solution, no_iterations = secant(f, x0, x1, eps=1.0e-6)
-    
-    if no_iterations > 0:  # Solution found
-        print('Number of function calls: {:d}'.format(2 + no_iterations))
-        print('A solution is: {:f}'.format(solution))
-    else:
-        print('Solution not found!')
+    print('\nFinding Roots using Secant Method\n')
 
-# Example functions
-def f(x):
-    return x**2 - 4
+    f = lambda x: x**2 - 2  # function f(x)
+    x_min = -5  # Lower limit of the root search domain
+    x_max = 5  # Upper limit of the root search domain
+    h = 0.1  # Width of root separation intervals
+
+    a = x_min
+    while a < x_max:
+        # Define the search interval [a, b] and find root
+        b = a + h  # Search interval [a, b]
+        x = a + 0.5 * h  # Initial approximation
+        root, iteration_error, iterations = secant(f, a, b, x)
+
+        # Check if the root was found successfully (iteration_error == 0) and it's not at the right interval boundary
+        if iteration_error == 0 and root != b:
+            print(f'Root: {root:.5f} found in interval ({a:.2f}, {b:.2f}) '
+                  f'after {iterations} iterations.')
+
+        # Shift left boundary
+        a = b
 
 
-def secant(f, x0, x1, eps):
+def secant(f, a, b, x):
     '''
-    This function uses the secant method to find the root of a given function.
-
+    Determines a real root x of function f isolated in the interval [a, b] using the Secant method.
+    
     Parameters:
-    f (callable): The function for which we want to find the root.
-    x0 (float): The first initial guess.
-    x1 (float): The second initial guess.
-    eps (float): The desired accuracy for the root.
+        f (function): The function for which the root is to be found.
+        a (float): The lower limit of the interval.
+        b (float): The upper limit of the interval.
+        x (float): An initial approximation of the root.
 
     Returns:
-    tuple: A tuple containing the root and the number of iterations taken to find the root.
+        Tuple: A tuple (root, error_code, iterations) containing:
+        - root (float): The estimated root of the function.
+        - error_code (int): An error code indicating the outcome:
+            0 - Normal execution
+            1 - Interval does not contain a root
+            2 - Maximum number of iterations exceeded
+        - iterations (int): The number of iterations performed to find the root.
     '''
-    # Initialize function values at the initial guesses
-    f_x0 = f(x0)
-    f_x1 = f(x1)
-    # Initialize iteration counter
-    iteration_counter = 0
+    eps = 1e-10  # Precision/tolerance of the root
+    max_iterations = 1000  # Maximum number of iterations
 
-    while abs(f_x1) > eps and iteration_counter < 100:
-        try:
-            # Compute the new approximation using the secant method
-            denominator = (f_x1 - f_x0)/(x1 - x0)
-            x = x1 - f_x1/denominator
-        except ZeroDivisionError:
-            print(f'Error! Zero derivative for x = {x}')
-            sys.exit(1)
+    # Initialize variables x0 and f0 with the initial approximation x and the value of the function f(x) at that point.
+    x0 = x
+    f0 = f(x0)
+    # Calculate the first approximation of the root
+    x = x0 - f0
 
-        # Update values for the next iteration
-        x0 = x1
-        x1 = x
-        f_x0 = f_x1
-        f_x1 = f(x1)
-        iteration_counter = iteration_counter + 1
+    for iteration in range(1, max_iterations + 1):
+        fx = f(x)  # Calculate the function value f(x) at the current approximation x.
+        df = (fx - f0) / (x - x0)  # Calculate approximate derivative based on the change in function values and changes in the approximation x.
+        # Update x0 and f0 with the current values of x and f(x)
+        x0 = x
+        f0 = fx
 
-    # Check if a solution is found or too many iterations were performed
-    if abs(f_x1) > eps:
-        iteration_counter = -1
-    return x, iteration_counter
+        # Calculate the root correction dx and update the current approximation x
+        dx = -fx / df if math.fabs(df) > eps else -fx
+        x += dx
+
+        # Check if the new approximation x is outside the interval [a, b]
+        if x < a or x > b:
+            return x, 1, 0
+        # Check for convergence of the root
+        if math.fabs(dx) <= eps * math.fabs(x):
+            return x, 0, iteration  # Check convergence
+
+    print('Secant: Maximum number of iterations exceeded!')
+    return x, 2, max_iterations
 
 
 if __name__ == '__main__':
