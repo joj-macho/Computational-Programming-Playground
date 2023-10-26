@@ -22,16 +22,21 @@ This program calculates the slope and y-intercept of the best-fit line based on 
     - If the denominator is not zero, the function calculates the slope and y-intercept using the method of least squares.
     - Finally, the calculated slope and y-intercept are returned as a tuple.
 
+- The `plot_results(x, y, slope, y_intercept)` function visualizes the data points and the best-fit line.
 
 ## Program Input & Output
 
-Using the example data points `x = np.array([1, 2, 3, 4, 5])` and `y = np.array([2, 3, 5, 4, 6])`.
+As an example, I fit the points `x = np.linspace(0, 1, 101)` and `y = 1 + x + x * np.random.random(len(x))`. 
 
-When you run the program, `line_fit.py`, the output will look like this;
+When you run the program, `line_fit.py`, the output will include a graphical representation of the data points and the best-fit line.
+
+<p align="center">
+  <img src="output/linefit_output.png" alt='Line Fitting Output'>
+</p>
 
 ```
 
 Linear Regression using the method of Least Squares.
 
-Best-Fit Line: y = 0.9000x + 1.3000
+Best-Fit Line: y = 1.4344x + 1.0143
 ```
